@@ -1,28 +1,35 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<template lang="html">
+  <div>
+    <div class="main container">
+      <characters-list :characters="characters"></characters-list>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import {eventBus} from './main.js'
+import CharactersList from './components/CharactersList.vue'
 
 export default {
   name: 'app',
+  data() {
+    return {
+      characters: []
+    }
+  },
   components: {
-    HelloWorld
+    "characters-list": CharactersList,
+  },
+
+  mounted() {
+    fetch("https://www.breakingbadapi.com/api/characters")
+    .then(response => response.json())
+    .then(characters => this.characters = characters)
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="css" scoped>
+
+
 </style>
